@@ -1,5 +1,6 @@
 <?php
 
+// here i don't know why you update the namespace app rather than DTApi. 
 namespace DTApi\Http\Controllers;
 
 use DTApi\Models\Job;
@@ -40,7 +41,7 @@ class BookingController extends Controller
             $response = $this->repository->getUsersJobs($user_id);
 
         }
-        elseif($request->__authenticatedUser->user_type == env('ADMIN_ROLE_ID') || $request->__authenticatedUser->user_type == env('SUPERADMIN_ROLE_ID'))
+        elseif($request->__authenticatedUser->user_type == config('x.ADMIN_ROLE_ID') || $request->__authenticatedUser->user_type == config('x.SUPERADMIN_ROLE_ID'))
         {
             $response = $this->repository->getAll($request);
         }
@@ -247,6 +248,8 @@ class BookingController extends Controller
 
         if ($admincomment || $session || $flagged || $manually_handled || $by_admin) {
 
+
+            // here if you are using repo then why here access direct job instance..
             $affectedRows1 = Job::where('id', '=', $jobid)->update(array('admin_comments' => $admincomment, 'flagged' => $flagged, 'session_time' => $session, 'manually_handled' => $manually_handled, 'by_admin' => $by_admin));
 
         }
